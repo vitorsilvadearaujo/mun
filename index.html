@@ -18,12 +18,12 @@
     var map = L.map('map').setView([-24.617, -51.322], 8);
 
     // Base OSM
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+    //L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //  attribution: '&copy; OpenStreetMap contributors'
+    //}).addTo(map);
 
     // Carrega o GeoJSON hospedado no GitHub
-    fetch('https://raw.githubusercontent.com/<vitorsilvadearaujo>/<mun>/main/Mun_PR_03.geojson')
+    fetch('https://raw.githubusercontent.com/vitorsilvadearaujo/mun/main/Mun_PR_03.geojson')
       .then(res => res.json())
       .then(geojsonData => {
         L.geoJSON(geojsonData).addTo(map);
