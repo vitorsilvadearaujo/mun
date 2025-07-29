@@ -4,31 +4,49 @@
   <meta charset="utf-8" />
   <title>Mapa Mun_PR_03</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet/dist/leaflet.css"
+  />
   <style>
-    #map { height: 100vh; margin: 0; padding: 0; }
     html, body { height: 100%; margin: 0; padding: 0; }
+    #map { width: 100%; height: 100vh; }
   </style>
 </head>
 <body>
   <div id="map"></div>
+
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    // Centraliza no município (latitude, longitude) e zoom
+    // 1. Cria o mapa centralizado em Mun_PR
     var map = L.map('map').setView([-24.617, -51.322], 8);
 
-    // Base OSM
-    //L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //  attribution: '&copy; OpenStreetMap contributors'
-    //}).addTo(map);
+    // 2. Adiciona camada base OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
 
-    // Carrega o GeoJSON hospedado no GitHub
+    // 3. Carrega o GeoJSON diretamente do GitHub
     fetch('https://raw.githubusercontent.com/vitorsilvadearaujo/mun/main/Mun_PR_03.geojson')
-      .then(res => res.json())
-      .then(geojsonData => {
-        L.geoJSON(geojsonData).addTo(map);
+      .then(function(response) {
+        if (!response.ok) throw new Error('Resposta não OK: ' + response.status);
+        return response.json();
       })
-      .catch(err => console.error('Erro ao carregar GeoJSON:', err));
+      .then(function(geojsonData) {
+        L.geoJSON(geojsonData, {
+          style: function(feature) {
+            return {
+              color: '#3388ff',
+              weight: 2,
+              fillOpacity: 0.2
+            };
+          }
+        }).addTo(map);
+      })
+      .catch(function(err) {
+        console.error('Erro ao carregar GeoJSON:', err);
+        alert('Não foi possível carregar o GeoJSON: ' + err.message);
+      });
   </script>
 </body>
 </html>
