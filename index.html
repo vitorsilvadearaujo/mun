@@ -23,7 +23,7 @@
     }).addTo(map);
 
     // Carrega o GeoJSON hospedado no GitHub
-    fetch('https://raw.githubusercontent.com/vitorsilvadearaujo/mun/main/Mun_PR_03.geojson')
+    fetch('https://raw.githubusercontent.com/<vitorsilvadearaujo>/<mun>/main/Mun_PR_03.geojson')
       .then(res => res.json())
       .then(geojsonData => {
         L.geoJSON(geojsonData).addTo(map);
